@@ -8,6 +8,21 @@
   default: true;
   --color-primary: #006A71;
   --color-secondary: #48A6A7;
-  --color-tertiary: #9ACBD0;
-  --color-quaternary: #F2EFE7;
+  --color-accent: #9ACBD0;
+  --color-base-100: #F2EFE7;
 }
+
+a.active {
+  color: #48A6A7;
+  text-decoration: underline;
+  
+}
+/* a:hover{
+  background-color: #48A6A7;
+  color: #F2EFE7;
+  
+}
+a{
+  padding: 2px 4px;
+  border-radius: 10px;
+} */
