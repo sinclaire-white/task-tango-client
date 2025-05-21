@@ -21,7 +21,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Landing
+        Component: Landing,
+        loader : () => fetch("/Categories.JSON")
       },
       {
         path:"/add-task",

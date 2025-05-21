@@ -1,0 +1,42 @@
+[
+  {
+    "index": 0,
+    "name": "Graphic Design",
+    "image": "https://i.ibb.co/DDrwy9TS/Graphic-Desing-1.jpg"
+  },
+  {
+    "index": 1,
+    "name": "Writing & Editing",
+    "image": "https://i.ibb.co/6RbNsbP3/Writing-and-Editing-1.jpg"
+  },
+  {
+    "index": 2,
+    "name": "Web Development",
+    "image": "https://i.ibb.co/G4fv3JMv/Web-Development-1.jpg"
+  },
+  {
+    "index": 3,
+    "name": "Digital Marketing",
+    "image": "https://i.ibb.co/bR8sRdRv/Digital-Marketing-1.jpg"
+  },
+  {
+    "index": 4,
+    "name": "Video & Animation",
+    "image": "https://i.ibb.co/Zz6LP3F9/Video-Animation-1.jpg"
+  },
+  {
+    "index": 5,
+    "name": "Translation & Transcription",
+    "image": "https://i.ibb.co/TDwqCyT8/Translation-Transcription-1.jpg"
+  },
+  {
+    "index": 6,
+    "name": "Programming & Tech Support",
+    "image": "https://i.ibb.co/0jhnKxGh/Programming-Tech-Support-1.jpg"
+  },
+  {
+    "index": 7,
+    "name": "Voice Over & Audio Services",
+    "image": "https://i.ibb.co/ZCyZxT4/Voice-Over-Audio-Services-1.jpg"
+  }
+]
