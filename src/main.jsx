@@ -14,10 +14,12 @@ import BrowseTask from './Pages/BrowseTask.jsx';
 import SignUp from './Pages/SignUp.jsx';
 import Login from './Pages/Login.jsx';
 import MyPostedTask from './Pages/MyPostedTask.jsx';
+import ErrorPage from './Components/ErrorPage.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Home,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
