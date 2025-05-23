@@ -13,6 +13,7 @@ import Landing from './Pages/Landing.jsx';
 import BrowseTask from './Pages/BrowseTask.jsx';
 import SignUp from './Pages/SignUp.jsx';
 import Login from './Pages/Login.jsx';
+import TaskDetails from './Pages/TaskDetails.jsx';
 import MyPostedTask from './Pages/MyPostedTask.jsx';
 import ErrorPage from './Components/ErrorPage.jsx';
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path:"/my-posted-task",
         Component: MyPostedTask
+      },
+      {
+        path:"/task-details",
+        Component: TaskDetails
       }
     ]
   },
