@@ -1,11 +1,13 @@
 import Select from "react-select";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2'
+import { AuthContext } from "../Providers/AuthContext";
+
 
 const AddTask = () => {
-
+const { user } = useContext(AuthContext);
 
   const handleAddTask = (e) =>{
 e.preventDefault();
@@ -13,7 +15,7 @@ const form =e.target;
 const formData = new FormData(form);
 const newTask = Object.fromEntries(formData);
 
-
+ newTask.email = user.email;
 
 // send data to db
 
@@ -35,7 +37,7 @@ fetch('http://localhost:3000/tasks', {
   timer: 1500
 });
 
-// form.reset()
+form.reset()
 
 
   }
@@ -58,7 +60,7 @@ fetch('http://localhost:3000/tasks', {
       label: "Translation & Transcription",
     },
     { value: "programming-techsupport", label: "Programming & Tech Support" },
-    { value: "Voice Over & Audio Services", label: "voiceover-audioservices" },
+    { value: "voiceover-audioservices", label: "Voice Over & Audio Services" },
   ];
 
   return (
@@ -91,7 +93,7 @@ fetch('http://localhost:3000/tasks', {
                 placeholder="Your Name Here"
                 name="name"
                 disabled
-                value={"ami khai"}
+                value={user?.displayName || user?.name || "User"}
                 
               />
             </fieldset>
@@ -104,7 +106,7 @@ fetch('http://localhost:3000/tasks', {
                 className="w-full bg-white input"
                 placeholder="Your Email Here"
                 disabled
-                value={"ami khai"}
+                value={user?.email || ""}
                 
               />
             </fieldset>

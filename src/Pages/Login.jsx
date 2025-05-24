@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate, useLocation } from "react-router";
 import { AuthContext } from "../Providers/AuthContext";
 import Swal from "sweetalert2";
 import { use } from "react";
@@ -10,6 +10,8 @@ const Login = () => {
 const { loginUser, signInWithGoogle } = use(AuthContext);
   const navigate = useNavigate();
 
+const location = useLocation();
+const from = location.state?.from?.pathname || "/";
 
 const handleLogin = (e) => {
     e.preventDefault();
@@ -25,8 +27,9 @@ const handleLogin = (e) => {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          navigate("/");
-        });
+        
+        navigate(from, { replace: true });
+      });
       })
       .catch((error) => {
         console.log(error);

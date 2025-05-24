@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router";
-
+import PrivateRoute from './Providers/PrivateRoute.jsx';
 import AuthProvider from './Providers/AuthProvider.jsx';
 import Home from './Pages/Home.jsx';
 import AddTask from './Pages/AddTask.jsx';
@@ -20,20 +20,30 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: Home,
+    loader: () => fetch("http://localhost:3000/users"),
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
         Component: Landing,
-        loader : () => fetch("/Categories.JSON")
+        loader : () => fetch("/Categories.JSON"),
       },
       {
         path:"/add-task",
-        Component: AddTask,
+        element: (
+          <PrivateRoute>
+            <AddTask></AddTask>
+          </PrivateRoute>
+        )
       },
       {
         path:"/browse-task",
-        Component: BrowseTask,
+                element: (
+          <PrivateRoute>
+            <BrowseTask></BrowseTask>
+          </PrivateRoute>
+        ),
+
         loader: () => fetch("http://localhost:3000/tasks")
       },
       {
@@ -46,11 +56,20 @@ const router = createBrowserRouter([
       },
       {
         path:"/my-posted-task",
-        Component: MyPostedTask
+        element: (
+          <PrivateRoute>
+            <MyPostedTask></MyPostedTask>
+          </PrivateRoute>
+        ),
+        loader: () => fetch("http://localhost:3000/tasks")
       },
       {
         path:"/task-details/:taskId",
-        Component: TaskDetails,
+         element: (
+          <PrivateRoute>
+            <TaskDetails></TaskDetails>
+          </PrivateRoute>
+        ),
         loader: ({ params }) => fetch(`http://localhost:3000/tasks/${params.taskId}`)
       }
     ]

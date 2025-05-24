@@ -127,7 +127,7 @@ const navigate = useNavigate();
           <button className="mt-4 btn btn-neutral text-secondary" >
             Sign Up
           </button>
-          <button className="btn bg-white text-black border-[#e5e5e5]" type="button"  onClick={handleGoogleSignUp}>
+          <button className="btn bg-white text-black border-[#e5e5e5]" onClick={handleGoogleSignUp}>
             <svg
               aria-label="Google logo"
               width="16"
