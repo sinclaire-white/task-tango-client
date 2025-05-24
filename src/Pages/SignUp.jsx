@@ -4,7 +4,7 @@ import { AuthContext } from "../Providers/AuthContext";
 import Swal from "sweetalert2";
 
 const SignUp = () => {
-  const { createUser } = use(AuthContext);
+  const { createUser, signInWithGoogle } = use(AuthContext);
 const navigate = useNavigate();
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -54,7 +54,46 @@ const navigate = useNavigate();
         console.log(error);
       });
   };
+ const handleGoogleSignUp = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        const userProfile = {
+          email: user.email,
+          name: user.displayName,
+          photo: user.photoURL,
+          creationTime: user.metadata.creationTime,
+          lastSignInTime: user.metadata.lastSignInTime,
+        };
 
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userProfile),
+        })
+          .then(() => {
+            Swal.fire({
+              icon: "success",
+              title: "Account Created",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(() => {
+              navigate("/");
+            });
+          });
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Google Signup Failed",
+          text: error.message,
+        });
+      });
+  };
+
+  
   return (
     <div className="h-screen mt-40">
       <form onSubmit={handleSignUp}>
@@ -85,10 +124,10 @@ const navigate = useNavigate();
             name="password"
           />
 
-          <button className="mt-4 btn btn-neutral text-secondary">
+          <button className="mt-4 btn btn-neutral text-secondary" >
             Sign Up
           </button>
-          <button className="btn bg-white text-black border-[#e5e5e5]">
+          <button className="btn bg-white text-black border-[#e5e5e5]" type="button"  onClick={handleGoogleSignUp}>
             <svg
               aria-label="Google logo"
               width="16"
