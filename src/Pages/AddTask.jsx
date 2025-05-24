@@ -2,15 +2,56 @@ import Select from "react-select";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from 'sweetalert2'
 
 const AddTask = () => {
+
+
+  const handleAddTask = (e) =>{
+e.preventDefault();
+const form =e.target;
+const formData = new FormData(form);
+const newTask = Object.fromEntries(formData);
+
+
+
+// send data to db
+
+fetch('http://localhost:3000/tasks', {
+  method: 'POST',
+  headers: {
+    'content-type' : 'application/json'
+  },
+  body: JSON.stringify(newTask)
+})
+.then(res => res.json())
+.then(data =>{
+  if(data.insertedId){
+    Swal.fire({
+  // position: "top-end",
+  icon: "success",
+  title: "Task Added Successfully",
+  showConfirmButton: false,
+  timer: 1500
+});
+
+// form.reset()
+
+
+  }
+})
+
+  }
+
+
+
   const [deadline, setDeadline] = useState(null);
 
   const options = [
     { value: "graphic-design", label: "Graphic Design" },
     { value: "writing-editing", label: "Writing & Editing" },
     { value: "web-development", label: "Web Development" },
-    { value: "digitalar-mketing", label: "Digital Marketing" },
+    { value: "digital-marketing", label: "Digital Marketing" },
     { value: "video-animation", label: "Video & Animation" },
     {
       value: "translation-transcription",
@@ -38,7 +79,7 @@ const AddTask = () => {
         </p>
       </div>
       <div>
-        <form>
+        <form onSubmit={handleAddTask}>
           <div className="grid grid-cols-2 gap-2">
             <fieldset className="w-full p-4 border fieldset bg-accent border-base-300 rounded-box">
               <label className="text-base font-bold text-black label">
@@ -49,6 +90,9 @@ const AddTask = () => {
                 className="w-full bg-white input"
                 placeholder="Your Name Here"
                 name="name"
+                disabled
+                value={"ami khai"}
+                
               />
             </fieldset>
             <fieldset className="w-full p-4 border fieldset bg-accent border-base-300 rounded-box">
@@ -59,6 +103,9 @@ const AddTask = () => {
                 type="email"
                 className="w-full bg-white input"
                 placeholder="Your Email Here"
+                disabled
+                value={"ami khai"}
+                
               />
             </fieldset>
             <fieldset className="w-full p-4 border fieldset bg-accent border-base-300 rounded-box">
@@ -70,13 +117,14 @@ const AddTask = () => {
                 className="w-full bg-white input"
                 placeholder="Write your task name here"
                 name="task-name"
+                required
               />
             </fieldset>
             <fieldset className="w-full p-4 border fieldset bg-accent border-base-300 rounded-box">
               <label className="text-base font-bold text-black label">
                 Category
               </label>
-              <Select options={options} />
+              <Select options={options} name="category" required/>
             </fieldset>
             <fieldset className="w-full p-4 border fieldset bg-accent border-base-300 rounded-box">
               <label className="text-base font-bold text-black label">
@@ -88,6 +136,8 @@ const AddTask = () => {
                 className="w-full bg-white input"
                 placeholderText="Select deadline"
                 minDate={new Date()}
+                name="date"
+                required
               />
             </fieldset>
             <fieldset className="w-full p-4 border fieldset bg-accent border-base-300 rounded-box">
@@ -99,6 +149,7 @@ const AddTask = () => {
                 className="w-full bg-white input"
                 placeholder="Your Budget"
                 name="budget"
+                required
               />
             </fieldset>
                        
@@ -107,9 +158,9 @@ const AddTask = () => {
               <label className="text-base font-bold text-black label">
                 Description
               </label>
-             <textarea className="w-full bg-white textarea" placeholder="Add Details About Task Here"></textarea>
+             <textarea className="w-full bg-white textarea" placeholder="Add Details About Task Here" name="description" required></textarea>
             </fieldset>
-            <button className="w-full py-4 mt-5 text-xl font-bold rounded-4xl bg-accent hover:bg-black hover:text-accent hover:cursor-pointer">Add</button>
+            <button className="w-full py-4 mt-5 text-xl font-bold rounded-4xl bg-accent hover:bg-black hover:text-accent hover:cursor-pointer" type="submit">Add Task</button>
         </form>
       </div>
       </div>

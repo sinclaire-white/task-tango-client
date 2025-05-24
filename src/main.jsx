@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router";
 
-
+import AuthProvider from './Providers/AuthProvider.jsx';
 import Home from './Pages/Home.jsx';
 import AddTask from './Pages/AddTask.jsx';
 import Landing from './Pages/Landing.jsx';
@@ -33,7 +33,8 @@ const router = createBrowserRouter([
       },
       {
         path:"/browse-task",
-        Component: BrowseTask
+        Component: BrowseTask,
+        loader: () => fetch("http://localhost:3000/tasks")
       },
       {
         path:"/signup",
@@ -48,8 +49,9 @@ const router = createBrowserRouter([
         Component: MyPostedTask
       },
       {
-        path:"/task-details",
-        Component: TaskDetails
+        path:"/task-details/:taskId",
+        Component: TaskDetails,
+        loader: ({ params }) => fetch(`http://localhost:3000/tasks/${params.taskId}`)
       }
     ]
   },
@@ -59,6 +61,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
-  </StrictMode>,
+    <AuthProvider><RouterProvider router={router}></RouterProvider></AuthProvider>
+  </StrictMode>
 )

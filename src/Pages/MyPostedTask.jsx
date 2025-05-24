@@ -1,6 +1,6 @@
 const MyPostedTask = () => {
   return (
-    <div>
+    <div className="min-h-screen p-20">
       <div>
         <div>
          
@@ -41,11 +41,11 @@ const MyPostedTask = () => {
           </div>
         </div>
         <div>
-            <div className="join join-vertical">
+            {/* <div className="join join-vertical">
   <button className="btn join-item">Update</button>
   <button className="btn join-item">Delete</button>
   <button className="btn join-item">Bids</button>
-</div>
+</div> */}
         </div>
       </div>
     </div>
