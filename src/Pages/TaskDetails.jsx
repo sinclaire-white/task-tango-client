@@ -31,7 +31,7 @@ const TaskDetails = () => {
           <tbody>
             <tr>
               <th className="w-1/4 bg-gray-100 border border-secondary">Task Name</th>
-              <td className="border border-secondary">{task['task-name'] || 'Untitled Task'}</td>
+              <td className="border border-secondary">{task.name || 'Untitled Task'}</td>
             </tr>
             <tr>
               <th className="bg-gray-100 border border-secondary">Description</th>

@@ -17,7 +17,7 @@ const AddTask = () => {
     newTask.email = user.email;
 
     // send data to db
-    fetch('http://localhost:3000/tasks', {  // Removed extra slash
+    fetch('http://localhost:3000/tasks', {  
       method: 'POST',
       headers: {
         'content-type': 'application/json'

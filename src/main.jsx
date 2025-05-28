@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: Home,
-    loader: () => fetch("http://localhost:3000/users"),
+    loader: () => fetch("http://localhost:3000//users"),
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {

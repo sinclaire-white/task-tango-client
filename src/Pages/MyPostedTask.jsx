@@ -1,5 +1,5 @@
 import { useLoaderData, Link } from "react-router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 import Swal from "sweetalert2";
 
@@ -8,6 +8,8 @@ const MyPostedTask = () => {
   const allTasks = useLoaderData();
   
   const myTasks = allTasks.filter(task => task.email === user?.email);
+ const [selectedTask, setSelectedTask] = useState(null);
+
 
   const handleDelete = async (taskId) => {
     Swal.fire({
@@ -45,6 +47,47 @@ const MyPostedTask = () => {
     });
   };
 
+ const handleUpdate = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedTask = Object.fromEntries(new FormData(form));
+    updatedTask.email = user?.email;
+
+    try {
+      const response = await fetch(`http://localhost:3000/tasks/${selectedTask._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedTask),
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          title: "Updated!",
+          text: "Your task has been updated successfully.",
+          icon: "success",
+        }).then(() => {
+          setSelectedTask(null);
+          window.location.reload();
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to update task.",
+        icon: "error",
+      });
+    }
+  };
+
+
+
+
+
+
+
+  
   return (
     <div className="min-h-screen p-4 lg:p-8 xl:p-12">
       <h1 className="mb-6 text-2xl font-bold text-center sm:text-3xl md:mb-8">My Posted Tasks</h1>
@@ -81,24 +124,24 @@ const MyPostedTask = () => {
                   </p>
                 </div>
                 <div className="flex gap-2 mt-4">
-                  <Link 
-                    to={`/update-task/${task._id}`} 
+                  <button 
+                    onClick={() => setSelectedTask(task)} 
                     className="flex-1 btn btn-sm btn-outline btn-primary"
                   >
                     Update
-                  </Link>
+                  </button>
                   <button 
                     onClick={() => handleDelete(task._id)}
                     className="flex-1 btn btn-sm btn-outline btn-error"
                   >
                     Delete
                   </button>
-                  <Link 
-                    to={`/task-bids/${task._id}`} 
+                  <button 
+                     
                     className="flex-1 btn btn-sm btn-outline btn-secondary"
                   >
                     Bids
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}
@@ -122,30 +165,30 @@ const MyPostedTask = () => {
                   {myTasks.map((task, index) => (
                     <tr key={task._id} className="hover:bg-base-200">
                       <th className="p-3 border border-secondary">{index + 1}</th>
-                      <td className="p-3 border border-secondary">{task['task-name']}</td>
+                      <td className="p-3 border border-secondary">{task.name}</td>
                       <td className="p-3 border border-secondary">{task.category}</td>
                       <td className="p-3 border border-secondary">${task.budget}</td>
                       <td className="p-3 border border-secondary">{task.date}</td>
                       <td className="p-3 border border-secondary">
                         <div className="flex flex-wrap gap-2">
-                          <Link 
-                            to={`/update-task/${task._id}`} 
+                          <button
+                            onClick={() => setSelectedTask(task)}
                             className="btn btn-sm btn-outline btn-primary"
                           >
                             Update
-                          </Link>
+                          </button>
                           <button 
                             onClick={() => handleDelete(task._id)}
                             className="btn btn-sm btn-outline btn-error"
                           >
                             Delete
                           </button>
-                          <Link 
-                            to={`/task-bids/${task._id}`} 
+                          <button 
+                            
                             className="btn btn-sm btn-outline btn-secondary"
                           >
                             Bids
-                           </Link>
+                           </button>
                         </div>
                       </td>
                     </tr>
@@ -156,8 +199,86 @@ const MyPostedTask = () => {
           </div>
         </>
       )}
+
+{selectedTask && (
+  <div className="modal modal-open">
+    <div className="max-w-lg modal-box md:max-w-xl">
+      <h3 className="mb-4 text-2xl font-semibold">Update Task</h3>
+      <form onSubmit={handleUpdate} className="space-y-4">
+        <div className="form-control">
+          <label className="label">
+            <span className="font-medium label-text">Task Name</span>
+          </label>
+          <input
+            type="text"
+            name="name"
+            defaultValue={selectedTask.name}
+            className="w-full input input-bordered"
+            placeholder="Enter task name"
+            required
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="font-medium label-text">Category</span>
+          </label>
+          <input
+            type="text"
+            name="category"
+            defaultValue={selectedTask.category}
+            className="w-full input input-bordered"
+            placeholder="Enter category"
+            required
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="font-medium label-text">Budget</span>
+          </label>
+          <input
+            type="number"
+            name="budget"
+            defaultValue={selectedTask.budget}
+            className="w-full input input-bordered"
+            placeholder="Enter budget"
+            required
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="font-medium label-text">Due Date</span>
+          </label>
+          <input
+            type="date"
+            name="date"
+            defaultValue={selectedTask.date}
+            className="w-full input input-bordered"
+            required
+          />
+        </div>
+        <div className="flex justify-end space-x-2 modal-action">
+          <button
+            type="button"
+            className="btn btn-outline btn-error"
+            onClick={() => setSelectedTask(null)}
+          >
+            Cancel
+          </button>
+          <button type="submit" className="btn btn-primary">
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
+
+
+
+      
     </div>
   );
 };
 
-export default MyPostedTask;
+export default MyPostedTask; 
