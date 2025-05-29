@@ -5,6 +5,9 @@ import { auth } from "../Firebase/firebase.init";
 import { signOut } from "firebase/auth";
 import { use } from "react";
 import Swal from "sweetalert2";
+import ThemeToggle from "../ThemeToggle";
+
+
 
 const Navbar = ({users}) => {
   const { user } = use(AuthContext);
@@ -16,11 +19,17 @@ const Navbar = ({users}) => {
       "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg";
   };
 
+
+
+
   const getUserName = () => {
     if (user?.displayName) return user.displayName;
     const currentUser = users.find(u => u.email === user?.email);
     return currentUser?.name || "User";
   };
+
+
+
 
   const handleLogout = () => {
     signOut(auth)
@@ -40,6 +49,12 @@ const Navbar = ({users}) => {
         });
       });
   };
+
+
+
+
+
+
 
   const links = [
     <NavLink
@@ -75,6 +90,8 @@ const Navbar = ({users}) => {
   ];
 
   return (
+    <div>
+      <div className="w-full pr-3 mt-3 navbar-end"><ThemeToggle></ThemeToggle></div>
     <div className="shadow-sm navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
@@ -117,6 +134,7 @@ const Navbar = ({users}) => {
         </ul>
       </div>
       <div className="space-x-2 navbar-end">
+        
         {user ? (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -156,7 +174,9 @@ const Navbar = ({users}) => {
             </Link>
           </>
         )}
+        
       </div>
+    </div>
     </div>
   );
 };
