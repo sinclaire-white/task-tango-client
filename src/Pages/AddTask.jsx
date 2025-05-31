@@ -3,11 +3,16 @@ import { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2'
+import { useLoaderData } from "react-router";
 import { AuthContext } from "../Providers/AuthContext";
 
 const AddTask = () => {
   const { user } = useContext(AuthContext);
 
+const users = useLoaderData();
+const currentUser = users?.find(u => u.email === user?.email);
+  const userName = currentUser?.name || user?.displayName || "User";
+  
   const handleAddTask = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -89,7 +94,7 @@ const AddTask = () => {
                 placeholder="Your Name Here"
                 name="name"
                 disabled
-                value={user?.displayName || user?.name || "User"}
+                value={userName}
               />
             </fieldset>
 

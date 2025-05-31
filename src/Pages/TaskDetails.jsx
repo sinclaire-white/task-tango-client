@@ -1,14 +1,54 @@
 import { useLoaderData, Link } from "react-router";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Swal from "sweetalert2";
+
 
 const TaskDetails = () => {
   const task = useLoaderData();
   const [bidCount, setBidCount] = useState(0);
   const [showBidButton, setShowBidButton] = useState(true);
 
-  const handleBid = () => {
-    setBidCount(bidCount + 1);
-    setShowBidButton(false);
+  const fetchTaskDetails = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/tasks/${task._id}`);
+      if (response.ok) {
+        const updatedTask = await response.json();
+        setBidCount(updatedTask.bids || 0); 
+      }
+    } catch (error) {
+      console.error("Error fetching task details:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTaskDetails(); 
+  }, [task._id]);
+
+  const handleBid = async () => {
+    const newBidCount = bidCount + 1;
+
+    try {
+      const response = await fetch(`http://localhost:3000/tasks/${task._id}/bid`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ bidCount: newBidCount }),
+      });
+
+      if (response.ok) {
+        setBidCount(newBidCount);
+        setShowBidButton(false);
+      } else {
+        throw new Error("Failed to place bid");
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+      });
+    }
   };
 
   if (!task || !task._id) {
@@ -22,7 +62,11 @@ const TaskDetails = () => {
   return (
     <div className="relative max-w-4xl min-h-screen p-4 mx-auto">
       {/* Bid Counter - Always visible */}
-      <div className={`badge badge-secondary absolute top-4 right-4 ${bidCount === 0 ? 'opacity-70' : ''}`}>
+      <div
+        className={`badge badge-secondary absolute top-4 right-4 ${
+          bidCount === 0 ? "opacity-70" : ""
+        }`}
+      >
         Bids: {bidCount}
       </div>
 

@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: Home,
-    loader: () => fetch("http://localhost:3000//users"),
+    loader: () => fetch("http://localhost:3000/users"),
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
@@ -34,7 +34,8 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <AddTask></AddTask>
           </PrivateRoute>
-        )
+        ),
+        loader: () => fetch("http://localhost:3000/users")
       },
       {
         path:"/browse-task",

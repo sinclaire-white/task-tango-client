@@ -1,35 +1,37 @@
-import { Link } from "react-router";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import { useContext } from "react"; 
 import { AuthContext } from "../Providers/AuthContext";
 import { auth } from "../Firebase/firebase.init";
 import { signOut } from "firebase/auth";
-import { use } from "react";
 import Swal from "sweetalert2";
 import ThemeToggle from "../ThemeToggle";
 
-
-
-const Navbar = ({users}) => {
-  const { user } = use(AuthContext);
-
-   const getUserPhoto = () => {
-    if (user?.photoURL) return user.photoURL;
-    const currentUser = users.find(u => u.email === user?.email);
-    return currentUser?.photo || 
-      "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg";
-  };
+const Navbar = ({ users }) => {
+  const { user, loading } = useContext(AuthContext);
 
 
 
+  // Show loader while AuthContext is loading
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
 
-  const getUserName = () => {
-    if (user?.displayName) return user.displayName;
-    const currentUser = users.find(u => u.email === user?.email);
-    return currentUser?.name || "User";
-  };
+ const getUserPhoto = () => {
+  if (user?.photoURL) return user.photoURL; // Firebase user photo
+  const currentUser = users?.find((u) => u.email === user?.email);
+  return currentUser?.photo || 
+    "https://via.placeholder.com/150"; // Default placeholder image
+};
 
-
-
+const getUserName = () => {
+  if (user?.displayName) return user.displayName; // Firebase user name
+  const currentUser = users?.find((u) => u.email === user?.email);
+  return currentUser?.name || "Anonymous User"; // Default name
+};
 
   const handleLogout = () => {
     signOut(auth)
@@ -50,40 +52,32 @@ const Navbar = ({users}) => {
       });
   };
 
-
-
-
-
-
-
   const links = [
     <NavLink
       key="home"
-      to={"/"}
-      className={
-        "hover:text-secondary hover:bg-black px-2 py-1 rounded-lg"
-      }
+      to="/"
+      className="px-2 py-1 rounded-lg hover:text-secondary hover:bg-black"
     >
       Home
     </NavLink>,
     <NavLink
       key="add-task"
-      to={"/add-task"}
-      className={"hover:bg-black px-2 py-1 rounded-lg  hover:text-secondary"}
+      to="/add-task"
+      className="px-2 py-1 rounded-lg hover:bg-black hover:text-secondary"
     >
       Add Task
     </NavLink>,
     <NavLink
       key="browse-task"
-      to={"/browse-task"}
-      className={"hover:bg-black px-2 py-1 rounded-lg hover:text-secondary"}
+      to="/browse-task"
+      className="px-2 py-1 rounded-lg hover:bg-black hover:text-secondary"
     >
       Browse Task
     </NavLink>,
     <NavLink
       key="my-posted-task"
-      to={"/my-posted-task"}
-      className={"hover:bg-black px-2 py-1 rounded-lg hover:text-secondary"}
+      to={`/my-posted-task?email=${user?.email}`} // Pass email as query param
+      className="px-2 py-1 rounded-lg hover:bg-black hover:text-secondary"
     >
       My Posted Task
     </NavLink>,
@@ -91,92 +85,91 @@ const Navbar = ({users}) => {
 
   return (
     <div>
-      <div className="w-full pr-3 mt-3 navbar-end"><ThemeToggle></ThemeToggle></div>
-    <div className="shadow-sm navbar bg-base-100">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+      <div className="w-full pr-3 mt-3 navbar-end">
+        <ThemeToggle></ThemeToggle>
+      </div>
+      <div className="shadow-sm navbar bg-base-100">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="p-2 mt-3 shadow menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] w-52"
             >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
-            </svg>
+              {links}
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="p-2 mt-3 shadow menu menu-sm dropdown-content bg-base-100 rounded-box z-1 w-52"
-          >
+          <div>
+            <img
+              src="https://i.ibb.co/qFPLCppp/Task-Tango-Logo.png"
+              alt="logo"
+              className="w-20 h-20"
+            />
+          </div>
+          <h2 className="text-2xl font-bold text-primary">Task Tango</h2>
+        </div>
+        <div className="hidden navbar-center lg:flex">
+          <ul className="px-1 space-x-2 text-lg font-medium menu menu-horizontal">
             {links}
           </ul>
         </div>
-        <div>
-          <img
-            src="https://i.ibb.co/qFPLCppp/Task-Tango-Logo.png"
-            alt="logo"
-            className="w-20 h-20"
-          />
-        </div>
-        <h2 className="text-2xl font-bold text-primary">Task Tango</h2>
-      </div>
-      <div className="hidden navbar-center lg:flex">
-        <ul className="px-1 space-x-2 text-lg font-medium menu menu-horizontal">
-          {links}
-        </ul>
-      </div>
-      <div className="space-x-2 navbar-end">
-        
-        {user ? (
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    src={getUserPhoto()}
-                    alt={getUserName()}
-                    title={getUserName()}
-                  />
+        <div className="space-x-2 navbar-end">
+          {user ? (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      src={getUserPhoto()}
+                      alt={getUserName()}
+                      title={getUserName()}
+                    />
+                  </div>
                 </div>
+                <span className="hidden font-semibold md:inline">
+                  {getUserName()}
+                </span>
               </div>
-              <span className="hidden font-semibold md:inline">
-                {getUserName()}
-              </span>
+              <button
+                onClick={handleLogout}
+                className="btn btn-primary hover:bg-black hover:text-secondary"
+              >
+                Logout
+              </button>
             </div>
-            <button
-              onClick={handleLogout}
-              className="btn btn-primary hover:bg-black hover:text-secondary"
-            >
-              Logout
-            </button>
-          </div>
-        ) : (
-          <>
-            <Link
-              to="/signup"
-              className="btn btn-primary hover:bg-black hover:text-secondary"
-            >
-              Sign Up
-            </Link>
-            <Link
-              to="/login"
-              className="btn btn-primary hover:bg-black hover:text-secondary"
-            >
-              Login
-            </Link>
-          </>
-        )}
-        
+          ) : (
+            <>
+              <Link
+                to="/signup"
+                className="btn btn-primary hover:bg-black hover:text-secondary"
+              >
+                Sign Up
+              </Link>
+              <Link
+                to="/login"
+                className="btn btn-primary hover:bg-black hover:text-secondary"
+              >
+                Login
+              </Link>
+            </>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

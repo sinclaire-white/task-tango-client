@@ -23,7 +23,9 @@ const [userData, setUserData] = useState(null);
 }, []);
 
 if (loading) {
-    return <div className='flex items-center justify-center'><span className="loading loading-spinner loading-lg"></span></div>;
+    return <div className="flex items-center justify-center min-h-screen">
+        <span className="text-[#006A71] loading loading-spinner loading-lg"></span>
+      </div>;
   }
 
     const createUser = (email,password) =>{
@@ -44,7 +46,8 @@ const signInWithGoogle = () => {
          userData, 
         createUser,
         loginUser,
-        signInWithGoogle
+        signInWithGoogle,
+        loading
         }
     
     return (

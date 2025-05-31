@@ -7,11 +7,11 @@ const Why = () => {
         Why Work With Us?
       </h2>
 
-      <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start lg:gap-12 xl:gap-16">
+      <div className="flex flex-col items-center gap-8 p-5 bg-accent rounded-2xl lg:flex-row lg:items-center lg:gap-12 xl:gap-16">
         {/* Features List - comes first in DOM for mobile, but appears on left on desktop */}
         <div className="w-full lg:w-1/2">
           <Fade direction="up" cascade triggerOnce damping={0.2}>
-            <div className="flex items-start gap-4 p-4 mb-6 transition-all duration-300 rounded-lg feature hover:bg-white hover:shadow-sm md:p-5 md:gap-5">
+            <div className="flex items-start gap-4 p-4 mb-6 border-2 border-black rounded-lg md:p-5 md:gap-5">
               <div className="flex-shrink-0">
                 <img 
                   src="https://i.ibb.co/8LmbFkqp/icons8-task.gif" 
@@ -20,7 +20,7 @@ const Why = () => {
                 />
               </div>
               <div>
-                <h3 className="text-lg font-semibold md:text-xl">Tailored Task Matching</h3>
+                <h3 className="text-lg font-extrabold md:text-xl">Tailored Task Matching</h3>
                 <p className="mt-2 text-gray-600 md:mt-3 md:text-base">
                   Smart matching connects you with the right freelancer or task based on skills, 
                   budget, and deadlines. 90% matched within 24 hours.
@@ -28,7 +28,7 @@ const Why = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-4 p-4 mb-6 transition-all duration-300 rounded-lg feature hover:bg-white hover:shadow-sm md:p-5 md:gap-5">
+            <div className="flex items-start gap-4 p-4 mb-6 border-2 border-black rounded-lg md:p-5 md:gap-5">
               <div className="flex-shrink-0">
                 <img 
                   src="https://i.ibb.co/0bNh7qL/icons8-secure.gif" 
@@ -45,7 +45,7 @@ const Why = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-4 p-4 mb-6 transition-all duration-300 rounded-lg feature hover:bg-white hover:shadow-sm md:p-5 md:gap-5">
+            <div className="flex items-start gap-4 p-4 mb-6 border-2 border-black rounded-lg md:p-5 md:gap-5">
               <div className="flex-shrink-0">
                 <img 
                   src="https://i.ibb.co/v4X4YL2G/icons8-handshake.gif" 
