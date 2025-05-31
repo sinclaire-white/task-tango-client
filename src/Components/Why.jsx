@@ -20,7 +20,7 @@ const Why = () => {
                 />
               </div>
               <div>
-                <h3 className="text-lg font-extrabold md:text-xl">Tailored Task Matching</h3>
+                <h3 className="text-lg font-semibold md:text-xl">Tailored Task Matching</h3>
                 <p className="mt-2 text-gray-600 md:mt-3 md:text-base">
                   Smart matching connects you with the right freelancer or task based on skills, 
                   budget, and deadlines. 90% matched within 24 hours.

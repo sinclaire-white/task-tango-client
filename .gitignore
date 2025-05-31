@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .vercel
+
+
+# Firebase config
+src/Firebase/firebase.init.js

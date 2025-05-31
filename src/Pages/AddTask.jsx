@@ -22,7 +22,7 @@ const currentUser = users?.find(u => u.email === user?.email);
     newTask.email = user.email;
 
     // send data to db
-    fetch('http://localhost:3000/tasks', {  
+    fetch('https://task-tango-server.vercel.app/tasks', {  
       method: 'POST',
       headers: {
         'content-type': 'application/json'

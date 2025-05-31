@@ -4,7 +4,7 @@ const FeaturedTask = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/featured-tasks")
+    fetch("https://task-tango-server.vercel.app/featured-tasks")
       .then((response) => response.json())
       .then((data) => 
         

@@ -12,7 +12,7 @@ const MyPostedTask = () => {
   // Fetch tasks for the current user
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/my-tasks/${user?.email}`);
+      const response = await fetch(`https://task-tango-server.vercel.app/my-tasks/${user?.email}`);
       if (response.ok) {
         const tasks = await response.json();
         setMyTasks(tasks);
@@ -42,7 +42,7 @@ const MyPostedTask = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+          const response = await fetch(`https://task-tango-server.vercel.app/tasks/${taskId}`, {
             method: "DELETE"
           });
 
@@ -72,7 +72,7 @@ const MyPostedTask = () => {
     updatedTask.email = user?.email;
 
     try {
-      const response = await fetch(`http://localhost:3000/tasks/${selectedTask._id}`, {
+      const response = await fetch(`https://task-tango-server.vercel.app/tasks/${selectedTask._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

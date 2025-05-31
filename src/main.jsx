@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: Home,
-    loader: () => fetch("http://localhost:3000/users"),
+    loader: () => fetch("https://task-tango-server.vercel.app/users"),
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
             <AddTask></AddTask>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:3000/users")
+        loader: () => fetch("https://task-tango-server.vercel.app/users")
       },
       {
         path:"/browse-task",
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
 
-        loader: () => fetch("http://localhost:3000/tasks")
+        loader: () => fetch("https://task-tango-server.vercel.app/tasks")
       },
       {
         path:"/signup",
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
             <MyPostedTask></MyPostedTask>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:3000/tasks")
+        loader: () => fetch("https://task-tango-server.vercel.app/tasks")
       },
       {
         path:"/task-details/:taskId",
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
             <TaskDetails></TaskDetails>
           </PrivateRoute>
         ),
-        loader: ({ params }) => fetch(`http://localhost:3000/tasks/${params.taskId}`)
+        loader: ({ params }) => fetch(`https://task-tango-server.vercel.app/tasks/${params.taskId}`)
       }
     ]
   },

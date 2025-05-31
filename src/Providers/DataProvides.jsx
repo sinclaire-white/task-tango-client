@@ -12,7 +12,7 @@ export const DataProvider = ({ children }) => {
   // Fetch all tasks
   const fetchTasks = async () => {
     try {
-      const response = await fetch('http://localhost:3000//tasks');
+      const response = await fetch('https://task-tango-server.vercel.app//tasks');
       const data = await response.json();
       setTasks(data);
     } catch (err) {
@@ -23,7 +23,7 @@ export const DataProvider = ({ children }) => {
   // Fetch all users
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:3000//users');
+      const response = await fetch('https://task-tango-server.vercel.app//users');
       const data = await response.json();
       setUsers(data);
     } catch (err) {
@@ -52,7 +52,7 @@ export const DataProvider = ({ children }) => {
     
     // Add other CRUD operations as needed
     addTask: async (newTask) => {
-      const response = await fetch('http://localhost:3000//tasks', {
+      const response = await fetch('https://task-tango-server.vercel.app//tasks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const DataProvider = ({ children }) => {
       return data;
     },
     deleteTask: async (taskId) => {
-      await fetch(`http://localhost:3000//tasks/${taskId}`, {
+      await fetch(`https://task-tango-server.vercel.app//tasks/${taskId}`, {
         method: 'DELETE',
       });
       setTasks(tasks.filter(task => task._id !== taskId));

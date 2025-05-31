@@ -10,7 +10,7 @@ const TaskDetails = () => {
 
   const fetchTaskDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/tasks/${task._id}`);
+      const response = await fetch(`https://task-tango-server.vercel.app/tasks/${task._id}`);
       if (response.ok) {
         const updatedTask = await response.json();
         setBidCount(updatedTask.bids || 0); 
@@ -28,7 +28,7 @@ const TaskDetails = () => {
     const newBidCount = bidCount + 1;
 
     try {
-      const response = await fetch(`http://localhost:3000/tasks/${task._id}/bid`, {
+      const response = await fetch(`https://task-tango-server.vercel.app/tasks/${task._id}/bid`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
