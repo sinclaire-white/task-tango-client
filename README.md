@@ -18,9 +18,9 @@ TaskTango is a full-stack freelance task marketplace platform. Users can add new
 
 ## 🛠️ Technologies Used
 
-- **Frontend:** React.js, Tailwind CSS, DaisyUI, React Router, React Hook Form
+- **Frontend:** React.js, Tailwind CSS, DaisyUI, React Router
 - **Backend:** Node.js, Express.js, MongoDB, Firebase Authentication, JWT
-- **Others:** React-toastify for notifications, React-datepicker for date selection
+- **Others:** Sweet-alert for notifications, React-datepicker for date selection
 
 ---
 
